@@ -1,9 +1,8 @@
 import dotenv from "dotenv";
 import server from "./server.js";
-import io from "./socket.js";
+
 import connectDB from "./db/index.js";
 
-// Load environment variables from .env file
 dotenv.config({ path: "../.env" });
 
 process.setMaxListeners(15);
