@@ -1,30 +1,50 @@
-import dotenv from "dotenv";
-import server from "./server.js";
+import dotenv from "dotenv"
+import mongoose, { connect } from "mongoose";
+import connectDB from "./db/index.js"
 
-import connectDB from "./db/index.js";
+dotenv.config({path:'../.env'})
 
-dotenv.config({ path: "../.env" });
 
-process.setMaxListeners(15);
 
-console.log(process.env.MONGO_URI)
 
-const serverPort = process.env.PORT || 7000;
 
 connectDB()
-  .then(() => {
-    server.listen(serverPort, () => {
-      console.log({
-        serverStatus: "🌐  Application is Running",
-        URL: `🔗 http://localhost:${serverPort}`,
-      });
-    });
+.then(()=>{
+  app.listn(process.env.PORT || 8000, ()=>{
+    console.log(`App is listening on port ${process.env.PORT || 8000}`)
+  console.log("DB connected successfully")
+}) ;
+})
+.catch((error)=>{
+  console.error("DB connection failed", error);
+  process.exit(1)
+})
 
-    server.on("error", (err) => {
-      console.log("Error occurred at index.js", err);
-    });
-  })
-  .catch((error) => {
-    console.log("DB connection failed from index.js", error);
-  });
-  console.log('MongoDB URI:', process.env.MONGO_URI);
+
+
+
+
+
+
+
+/* const app=express()
+
+( async()=>{
+  try{
+    await mongoose.connect(`${process.env.MONGO_URI}/${DB_NAME}`)
+    app.on("ERROR",(error)=>{
+      console.err("ERR:",error);
+      throw error
+    })
+    
+  
+    app.listen(process.env.PORT , ()=>{
+      console.log(`App is listening on port ${process.env.PORT}`)
+    })
+
+  } catch (error) {
+    console.error("ERROR", error);
+    throw error
+  }
+})() */
+
